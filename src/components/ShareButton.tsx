@@ -16,7 +16,6 @@ export default function ShareButton({ groupId }: ShareButtonProps) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback: select text in a temporary input
       const input = document.createElement("input");
       input.value = url;
       document.body.appendChild(input);
@@ -31,7 +30,7 @@ export default function ShareButton({ groupId }: ShareButtonProps) {
   return (
     <button
       onClick={handleCopy}
-      className="w-full border border-indigo-300 text-indigo-600 py-2 rounded-lg font-medium hover:bg-indigo-50"
+      className="btn-ghost w-full py-2.5 text-sm"
     >
       {copied ? "コピーしました!" : "共有URLをコピー"}
     </button>

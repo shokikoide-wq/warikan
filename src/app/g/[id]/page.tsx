@@ -83,17 +83,20 @@ export default function GroupPage() {
 
   if (loading) {
     return (
-      <div className="flex justify-center py-12">
-        <div className="text-gray-400">読み込み中...</div>
+      <div className="flex justify-center py-16">
+        <div className="text-purple-400/60 animate-fade-in">読み込み中...</div>
       </div>
     );
   }
 
   if (error || !group) {
     return (
-      <div className="text-center py-12">
+      <div className="text-center py-16 animate-fade-in">
         <div className="text-gray-500 mb-4">{error || "グループが見つかりません"}</div>
-        <a href="/" className="text-indigo-600 hover:text-indigo-800">
+        <a
+          href="/"
+          className="bg-gradient-to-r from-purple-600 to-indigo-500 bg-clip-text text-transparent font-medium hover:opacity-70 transition-opacity"
+        >
           トップに戻る
         </a>
       </div>
@@ -103,27 +106,30 @@ export default function GroupPage() {
   const totalAmount = group.expenses.reduce((sum, e) => sum + e.amount, 0);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in-up">
+      {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold">{group.name}</h1>
-        <div className="text-sm text-gray-500 mt-1">
+        <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-700 via-indigo-600 to-blue-600 bg-clip-text text-transparent">
+          {group.name}
+        </h1>
+        <div className="text-sm text-gray-500 mt-1.5">
           {group.members.length}人 ・ 合計 {formatCurrency(totalAmount)}
         </div>
       </div>
 
-      {/* メンバー */}
-      <div>
-        <h2 className="text-sm font-medium text-gray-500 mb-2">メンバー</h2>
-        <div className="flex flex-wrap gap-2 mb-2">
+      {/* Members */}
+      <div className="glass-card-strong p-4">
+        <h2 className="section-label mb-3">メンバー</h2>
+        <div className="flex flex-wrap gap-2 mb-3">
           {group.members.map((m) => (
             <span
               key={m.id}
-              className="inline-flex items-center gap-1 bg-gray-100 px-3 py-1 rounded-full text-sm"
+              className="glass-pill inline-flex items-center gap-1.5"
             >
               {m.name}
               <button
                 onClick={() => handleDeleteMember(m.id)}
-                className="text-gray-300 hover:text-red-500 ml-1"
+                className="delete-btn ml-0.5 text-xs"
               >
                 ✕
               </button>
@@ -133,14 +139,14 @@ export default function GroupPage() {
         <AddMemberForm onAdd={handleAddMember} />
       </div>
 
-      {/* 支出追加 */}
+      {/* Add Expense */}
       {group.members.length >= 2 && (
         <ExpenseForm members={group.members} onSubmit={handleAddExpense} />
       )}
 
-      {/* 支出一覧 */}
+      {/* Expense List */}
       <div>
-        <h2 className="text-sm font-medium text-gray-500 mb-2">支出一覧</h2>
+        <h2 className="section-label mb-3">支出一覧</h2>
         <ExpenseList
           expenses={group.expenses}
           members={group.members}
@@ -149,10 +155,10 @@ export default function GroupPage() {
         />
       </div>
 
-      {/* 精算結果 */}
+      {/* Settlement */}
       <SettlementView group={group} />
 
-      {/* 共有 */}
+      {/* Share */}
       <ShareButton groupId={groupId} />
     </div>
   );

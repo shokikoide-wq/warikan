@@ -77,28 +77,29 @@ export default function ExpenseList({
 
   if (expenses.length === 0) {
     return (
-      <div className="text-center text-gray-400 py-8">
+      <div className="text-center text-gray-400/70 py-10 text-sm">
         まだ支出がありません
       </div>
     );
   }
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2.5">
       {expenses.map((expense) =>
         editingId === expense.id ? (
           <div
             key={expense.id}
-            className="bg-white rounded-lg border border-indigo-300 p-4 space-y-3"
+            className="glass-card-strong p-4 space-y-3 animate-fade-in"
+            style={{ borderColor: "rgba(124, 58, 237, 0.25)" }}
           >
             <div>
-              <label className="block text-sm text-gray-600 mb-1">
+              <label className="section-label mb-1.5 block">
                 支払った人
               </label>
               <select
                 value={editPayerId}
                 onChange={(e) => setEditPayerId(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="glass-select text-sm"
               >
                 {members.map((m) => (
                   <option key={m.id} value={m.id}>
@@ -108,16 +109,16 @@ export default function ExpenseList({
               </select>
             </div>
             <div>
-              <label className="block text-sm text-gray-600 mb-1">内容</label>
+              <label className="section-label mb-1.5 block">内容</label>
               <input
                 type="text"
                 value={editTitle}
                 onChange={(e) => setEditTitle(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="glass-input text-sm"
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600 mb-1">
+              <label className="section-label mb-1.5 block">
                 金額（円）
               </label>
               <input
@@ -125,16 +126,16 @@ export default function ExpenseList({
                 value={editAmount}
                 onChange={(e) => setEditAmount(e.target.value)}
                 min="1"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="glass-input text-sm"
               />
             </div>
             <div>
-              <div className="flex items-center justify-between mb-1">
-                <label className="text-sm text-gray-600">割り勘対象</label>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="section-label">割り勘対象</label>
                 <button
                   type="button"
                   onClick={() => setEditSplitAmong(members.map((m) => m.id))}
-                  className="text-xs text-indigo-600 hover:text-indigo-800"
+                  className="text-xs font-medium bg-gradient-to-r from-purple-600 to-indigo-500 bg-clip-text text-transparent hover:opacity-70 transition-opacity"
                 >
                   全員選択
                 </button>
@@ -145,10 +146,10 @@ export default function ExpenseList({
                     key={m.id}
                     type="button"
                     onClick={() => toggleMember(m.id)}
-                    className={`px-3 py-1 rounded-full text-sm border ${
+                    className={`glass-pill text-sm ${
                       editSplitAmong.includes(m.id)
-                        ? "bg-indigo-100 border-indigo-300 text-indigo-700"
-                        : "bg-gray-50 border-gray-200 text-gray-500"
+                        ? "glass-pill-active"
+                        : "glass-pill-inactive"
                     }`}
                   >
                     {m.name}
@@ -156,11 +157,11 @@ export default function ExpenseList({
                 ))}
               </div>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2.5 pt-1">
               <button
                 type="button"
                 onClick={cancelEdit}
-                className="flex-1 py-2 rounded-lg border border-gray-300 text-gray-600 text-sm hover:bg-gray-50"
+                className="btn-ghost flex-1 py-2 text-sm"
               >
                 キャンセル
               </button>
@@ -168,7 +169,7 @@ export default function ExpenseList({
                 type="button"
                 onClick={handleSave}
                 disabled={loading}
-                className="flex-1 bg-indigo-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 disabled:opacity-50"
+                className="btn-gradient flex-1 py-2 text-sm"
               >
                 {loading ? "保存中..." : "保存"}
               </button>
@@ -177,13 +178,13 @@ export default function ExpenseList({
         ) : (
           <div
             key={expense.id}
-            className="bg-white rounded-lg border border-gray-200 p-4 cursor-pointer hover:border-gray-300"
+            className="glass-card p-4 cursor-pointer hover:scale-[1.01] transition-all duration-200"
             onClick={() => startEdit(expense)}
           >
             <div className="flex items-start justify-between">
               <div>
-                <div className="font-medium">{expense.title}</div>
-                <div className="text-sm text-gray-500">
+                <div className="font-medium text-gray-800">{expense.title}</div>
+                <div className="text-sm text-gray-500 mt-0.5">
                   {getMemberName(expense.payerId)} が支払い
                 </div>
                 {expense.splitAmong.length < members.length && (
@@ -192,8 +193,8 @@ export default function ExpenseList({
                   </div>
                 )}
               </div>
-              <div className="flex items-center gap-2">
-                <span className="font-bold text-lg">
+              <div className="flex items-center gap-2.5">
+                <span className="font-bold text-lg bg-gradient-to-r from-purple-700 to-indigo-600 bg-clip-text text-transparent">
                   {formatCurrency(expense.amount)}
                 </span>
                 <button
@@ -201,7 +202,7 @@ export default function ExpenseList({
                     e.stopPropagation();
                     onDelete(expense.id);
                   }}
-                  className="text-gray-300 hover:text-red-500 text-sm"
+                  className="delete-btn text-sm"
                 >
                   ✕
                 </button>

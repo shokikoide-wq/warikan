@@ -55,67 +55,71 @@ export default function Home() {
   };
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-2">新しいグループを作成</h1>
-      <p className="text-gray-500 mb-6">
+    <div className="animate-fade-in-up">
+      <h1 className="text-2xl font-bold mb-1.5 bg-gradient-to-r from-purple-700 via-indigo-600 to-blue-600 bg-clip-text text-transparent">
+        新しいグループを作成
+      </h1>
+      <p className="text-gray-500 mb-8 text-sm">
         旅行やイベントの立て替えを簡単に精算できます
       </p>
 
       {error && (
-        <div className="bg-red-50 text-red-700 px-4 py-3 rounded-lg mb-4">
+        <div className="error-banner mb-5 animate-fade-in">
           {error}
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label className="block text-sm font-medium mb-1">グループ名</label>
-          <input
-            type="text"
-            value={groupName}
-            onChange={(e) => setGroupName(e.target.value)}
-            placeholder="例: 箱根旅行"
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">メンバー</label>
-          <div className="space-y-2">
-            {memberNames.map((name, i) => (
-              <div key={i} className="flex gap-2">
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => updateMemberName(i, e.target.value)}
-                  placeholder={`メンバー ${i + 1}`}
-                  className="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                />
-                {memberNames.length > 2 && (
-                  <button
-                    type="button"
-                    onClick={() => removeMemberField(i)}
-                    className="text-gray-400 hover:text-red-500 px-2"
-                  >
-                    ✕
-                  </button>
-                )}
-              </div>
-            ))}
+        <div className="glass-card-strong p-5 space-y-5">
+          <div>
+            <label className="section-label mb-2 block">グループ名</label>
+            <input
+              type="text"
+              value={groupName}
+              onChange={(e) => setGroupName(e.target.value)}
+              placeholder="例: 箱根旅行"
+              className="glass-input"
+            />
           </div>
-          <button
-            type="button"
-            onClick={addMemberField}
-            className="mt-2 text-indigo-600 text-sm font-medium hover:text-indigo-800"
-          >
-            + メンバーを追加
-          </button>
+
+          <div>
+            <label className="section-label mb-2 block">メンバー</label>
+            <div className="space-y-2.5">
+              {memberNames.map((name, i) => (
+                <div key={i} className="flex gap-2 animate-fade-in">
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => updateMemberName(i, e.target.value)}
+                    placeholder={`メンバー ${i + 1}`}
+                    className="glass-input flex-1"
+                  />
+                  {memberNames.length > 2 && (
+                    <button
+                      type="button"
+                      onClick={() => removeMemberField(i)}
+                      className="delete-btn px-2 text-lg"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={addMemberField}
+              className="mt-3 text-sm font-medium bg-gradient-to-r from-purple-600 to-indigo-500 bg-clip-text text-transparent hover:opacity-70 transition-opacity"
+            >
+              + メンバーを追加
+            </button>
+          </div>
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-indigo-600 text-white py-3 rounded-lg font-medium hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn-gradient w-full py-3.5 text-base"
         >
           {loading ? "作成中..." : "グループを作成"}
         </button>

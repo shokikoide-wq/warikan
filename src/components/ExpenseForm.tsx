@@ -52,7 +52,7 @@ export default function ExpenseForm({ members, onSubmit }: ExpenseFormProps) {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="w-full bg-indigo-600 text-white py-3 rounded-lg font-medium hover:bg-indigo-700"
+        className="btn-gradient w-full py-3.5 text-base"
       >
         + 支出を追加
       </button>
@@ -62,16 +62,16 @@ export default function ExpenseForm({ members, onSubmit }: ExpenseFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white rounded-lg border border-gray-200 p-4 space-y-4"
+      className="glass-card-strong p-5 space-y-4 animate-fade-in-up"
     >
-      <h3 className="font-medium">支出を追加</h3>
+      <h3 className="font-semibold text-gray-800">支出を追加</h3>
 
       <div>
-        <label className="block text-sm text-gray-600 mb-1">支払った人</label>
+        <label className="section-label mb-1.5 block">支払った人</label>
         <select
           value={payerId}
           onChange={(e) => setPayerId(e.target.value)}
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="glass-select"
         >
           <option value="">選択してください</option>
           {members.map((m) => (
@@ -83,24 +83,22 @@ export default function ExpenseForm({ members, onSubmit }: ExpenseFormProps) {
       </div>
 
       <div>
-        <label className="block text-sm text-gray-600 mb-1">内容</label>
+        <label className="section-label mb-1.5 block">内容</label>
         <input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="例: 夕食代"
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="glass-input"
         />
-        <div className="flex flex-wrap gap-1.5 mt-2">
+        <div className="flex flex-wrap gap-1.5 mt-2.5">
           {["飲食費", "交通費", "宿泊費", "買い物", "その他"].map((label) => (
             <button
               key={label}
               type="button"
               onClick={() => setTitle(label)}
-              className={`px-2.5 py-1 rounded-full text-xs border ${
-                title === label
-                  ? "bg-indigo-100 border-indigo-300 text-indigo-700"
-                  : "bg-gray-50 border-gray-200 text-gray-500 hover:bg-gray-100"
+              className={`quick-tag ${
+                title === label ? "quick-tag-active" : "quick-tag-inactive"
               }`}
             >
               {label}
@@ -110,24 +108,24 @@ export default function ExpenseForm({ members, onSubmit }: ExpenseFormProps) {
       </div>
 
       <div>
-        <label className="block text-sm text-gray-600 mb-1">金額（円）</label>
+        <label className="section-label mb-1.5 block">金額（円）</label>
         <input
           type="number"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
           placeholder="0"
           min="1"
-          className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="glass-input"
         />
       </div>
 
       <div>
-        <div className="flex items-center justify-between mb-1">
-          <label className="text-sm text-gray-600">割り勘対象</label>
+        <div className="flex items-center justify-between mb-1.5">
+          <label className="section-label">割り勘対象</label>
           <button
             type="button"
             onClick={selectAll}
-            className="text-xs text-indigo-600 hover:text-indigo-800"
+            className="text-xs font-medium bg-gradient-to-r from-purple-600 to-indigo-500 bg-clip-text text-transparent hover:opacity-70 transition-opacity"
           >
             全員選択
           </button>
@@ -138,10 +136,10 @@ export default function ExpenseForm({ members, onSubmit }: ExpenseFormProps) {
               key={m.id}
               type="button"
               onClick={() => toggleMember(m.id)}
-              className={`px-3 py-1 rounded-full text-sm border ${
+              className={`glass-pill text-sm ${
                 splitAmong.includes(m.id)
-                  ? "bg-indigo-100 border-indigo-300 text-indigo-700"
-                  : "bg-gray-50 border-gray-200 text-gray-500"
+                  ? "glass-pill-active"
+                  : "glass-pill-inactive"
               }`}
             >
               {m.name}
@@ -150,18 +148,18 @@ export default function ExpenseForm({ members, onSubmit }: ExpenseFormProps) {
         </div>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2.5 pt-1">
         <button
           type="button"
           onClick={() => setIsOpen(false)}
-          className="flex-1 py-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50"
+          className="btn-ghost flex-1 py-2.5"
         >
           キャンセル
         </button>
         <button
           type="submit"
           disabled={loading || !payerId || !title.trim() || !amount}
-          className="flex-1 bg-indigo-600 text-white py-2 rounded-lg font-medium hover:bg-indigo-700 disabled:opacity-50"
+          className="btn-gradient flex-1 py-2.5"
         >
           {loading ? "追加中..." : "追加"}
         </button>

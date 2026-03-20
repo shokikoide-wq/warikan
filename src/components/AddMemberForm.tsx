@@ -31,12 +31,12 @@ export default function AddMemberForm({ onAdd }: AddMemberFormProps) {
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="メンバー名"
-        className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        className="glass-input flex-1 text-sm"
       />
       <button
         type="submit"
         disabled={loading || !name.trim()}
-        className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 disabled:opacity-50"
+        className="btn-ghost px-4 py-2 text-sm"
       >
         追加
       </button>

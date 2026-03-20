@@ -20,26 +20,26 @@ export default function SettlementView({ group }: SettlementViewProps) {
   const totalAmount = group.expenses.reduce((sum, e) => sum + e.amount, 0);
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-4">
-      <h3 className="font-medium mb-3">精算結果</h3>
+    <div className="glass-card-strong p-5">
+      <h3 className="font-semibold text-gray-800 mb-3">精算結果</h3>
 
-      <div className="text-sm text-gray-500 mb-3">
+      <div className="text-sm text-gray-500 mb-4">
         合計: {formatCurrency(totalAmount)}
       </div>
 
       {settlements.length === 0 ? (
-        <div className="text-gray-400 text-sm">精算の必要はありません</div>
+        <div className="text-gray-400/70 text-sm">精算の必要はありません</div>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           {settlements.map((s: Settlement, i: number) => (
             <div
               key={i}
-              className="flex items-center gap-2 bg-indigo-50 rounded-lg px-4 py-3"
+              className="settlement-row flex items-center gap-2"
             >
-              <span className="font-medium">{getMemberName(s.fromId)}</span>
-              <span className="text-gray-400">→</span>
-              <span className="font-medium">{getMemberName(s.toId)}</span>
-              <span className="ml-auto font-bold text-indigo-700">
+              <span className="font-medium text-gray-800">{getMemberName(s.fromId)}</span>
+              <span className="text-purple-300">→</span>
+              <span className="font-medium text-gray-800">{getMemberName(s.toId)}</span>
+              <span className="ml-auto font-bold bg-gradient-to-r from-purple-700 to-indigo-600 bg-clip-text text-transparent">
                 {formatCurrency(s.amount)}
               </span>
             </div>
