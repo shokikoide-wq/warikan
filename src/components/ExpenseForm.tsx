@@ -91,6 +91,22 @@ export default function ExpenseForm({ members, onSubmit }: ExpenseFormProps) {
           placeholder="例: 夕食代"
           className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
+        <div className="flex flex-wrap gap-1.5 mt-2">
+          {["飲食費", "交通費", "宿泊費", "買い物", "チケット", "お土産", "その他"].map((label) => (
+            <button
+              key={label}
+              type="button"
+              onClick={() => setTitle(label)}
+              className={`px-2.5 py-1 rounded-full text-xs border ${
+                title === label
+                  ? "bg-indigo-100 border-indigo-300 text-indigo-700"
+                  : "bg-gray-50 border-gray-200 text-gray-500 hover:bg-gray-100"
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div>
