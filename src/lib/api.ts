@@ -137,6 +137,38 @@ export async function addExpense(
   };
 }
 
+export async function updateExpense(
+  expenseId: string,
+  payerId: string,
+  title: string,
+  amount: number,
+  splitAmong: string[]
+): Promise<void> {
+  const { error } = await getSupabase()
+    .from("expenses")
+    .update({ payer_id: payerId, title, amount })
+    .eq("id", expenseId);
+  if (error) throw error;
+
+  // Delete existing splits and re-insert
+  const { error: deleteError } = await getSupabase()
+    .from("expense_splits")
+    .delete()
+    .eq("expense_id", expenseId);
+  if (deleteError) throw deleteError;
+
+  if (splitAmong.length > 0) {
+    const splits = splitAmong.map((memberId) => ({
+      expense_id: expenseId,
+      member_id: memberId,
+    }));
+    const { error: splitsError } = await getSupabase()
+      .from("expense_splits")
+      .insert(splits);
+    if (splitsError) throw splitsError;
+  }
+}
+
 export async function deleteExpense(expenseId: string): Promise<void> {
   const { error } = await getSupabase()
     .from("expenses")

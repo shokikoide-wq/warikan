@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams } from "next/navigation";
 import { Group } from "@/types";
-import { getGroup, addMember, deleteMember, addExpense, deleteExpense } from "@/lib/api";
+import { getGroup, addMember, deleteMember, addExpense, updateExpense, deleteExpense } from "@/lib/api";
 import { formatCurrency } from "@/lib/utils";
 import ExpenseForm from "@/components/ExpenseForm";
 import ExpenseList from "@/components/ExpenseList";
@@ -65,6 +65,17 @@ export default function GroupPage() {
     await fetchGroup();
   };
 
+  const handleEditExpense = async (
+    expenseId: string,
+    payerId: string,
+    title: string,
+    amount: number,
+    splitAmong: string[]
+  ) => {
+    await updateExpense(expenseId, payerId, title, amount, splitAmong);
+    await fetchGroup();
+  };
+
   const handleDeleteExpense = async (expenseId: string) => {
     await deleteExpense(expenseId);
     await fetchGroup();
@@ -122,9 +133,6 @@ export default function GroupPage() {
         <AddMemberForm onAdd={handleAddMember} />
       </div>
 
-      {/* 精算結果 */}
-      <SettlementView group={group} />
-
       {/* 支出追加 */}
       {group.members.length >= 2 && (
         <ExpenseForm members={group.members} onSubmit={handleAddExpense} />
@@ -137,8 +145,12 @@ export default function GroupPage() {
           expenses={group.expenses}
           members={group.members}
           onDelete={handleDeleteExpense}
+          onEdit={handleEditExpense}
         />
       </div>
+
+      {/* 精算結果 */}
+      <SettlementView group={group} />
 
       {/* 共有 */}
       <ShareButton groupId={groupId} />
