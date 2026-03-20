@@ -14,6 +14,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <head>
+        <link rel="icon" href="/favicon.png" type="image/png" />
         <link
           href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@700;900&display=swap"
           rel="stylesheet"
