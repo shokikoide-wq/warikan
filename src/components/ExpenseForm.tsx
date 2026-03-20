@@ -92,7 +92,7 @@ export default function ExpenseForm({ members, onSubmit }: ExpenseFormProps) {
           className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
         <div className="flex flex-wrap gap-1.5 mt-2">
-          {["飲食費", "交通費", "宿泊費", "買い物", "チケット", "お土産", "その他"].map((label) => (
+          {["飲食費", "交通費", "宿泊費", "買い物", "その他"].map((label) => (
             <button
               key={label}
               type="button"
